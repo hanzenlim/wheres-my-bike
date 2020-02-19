@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Button } from 'antd';
+import styled from 'styled-components';
 import './App.css';
 
+import About from './pages/About';
+import Home from './pages/Home';
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+const SCContainer = styled.div`
+    height: 80vh;
+    background: #f5f5f5;
+`;
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Router>
+                <div>
+                    <Header vh="20">I'm the header</Header>
+                    <SCContainer>
+                        {/* A <Switch> looks through its children <Route>s and
+      renders the first one that matches the current URL. */}
+                        <Switch>
+                            <Route path="/about">
+                                <About />
+                            </Route>
+                            <Route path="/">
+                                <Home />
+                            </Route>
+                        </Switch>
+                    </SCContainer>
+                    <Footer />
+                </div>
+            </Router>
+        </div>
+    );
 }
 
 export default App;
