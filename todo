@@ -1,0 +1,25 @@
+- [ ] Home Page
+    - [ ] header
+    - [ ] general layout 
+    - [ ] search bar
+    - [ ] search card
+    - [ ] beautify search card
+    - [ ] connect to api
+        - [ ] connect to incidents API https://bikewise.org:443/api/v2/incidents?page=1&proximity_square=100
+    - [ ] pagination
+
+- [ 
+- [ ] About Page
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] Optional(Performance/Misc)
+    - [ ] Add lazy loading for images 
+    - [ ] Add offline mode
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] frameworks/local dev setup
+    - [ ] Add react router
+    - [ ] Add styled components
+    - [ ] Add prettier and linting
