@@ -21,7 +21,7 @@
     - [+] search card
     - [+] beautify search card
     - [+] connect to api
-        - [ ] connect to incidents API https://bikewise.org:443/api/v2/incidents?page=1&proximity_square=100
+        - [+] connect to incidents API https://bikewise.org:443/api/v2/incidents?page=1&proximity_square=100
     - [+] pagination
 - [ ] Bike detail page 
     - [ ] open a modal when clicking 

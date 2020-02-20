@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Pagination } from 'antd';
 import { Icon } from 'antd';
 import { DatePicker } from 'antd';
 import moment from 'moment';
@@ -69,12 +70,13 @@ function Home() {
     const [isLoading, setIsLoading] = useState([true]);
     const [queryText, setQueryText] = useState('');
     const [dateRange, setDateRange] = useState(['', '']);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         fetch(
             getBikeWiseSearchUrl({
                 location: defaultLocation,
-                page: 1,
+                page,
                 perPage,
                 queryText,
                 dateRange,
@@ -90,7 +92,7 @@ function Home() {
                 setIsLoading(false);
             })
             .catch(error => console.log(error));
-    }, [queryText, dateRange]);
+    }, [queryText, dateRange, page]);
 
     return (
         <div>
@@ -128,6 +130,21 @@ function Home() {
                 {isLoading
                     ? renderLoadingComponent()
                     : generateSearchCard(searchResult)}
+                <SuperDiv margin="0 auto">
+                    <Pagination
+                        defaultCurrent={1}
+                        total={50}
+                        onChange={page => {
+                            setPage(page);
+                            setIsLoading(true);
+                            window.scrollTo({
+                                top: 0,
+                                left: 0,
+                                behavior: 'smooth',
+                            });
+                        }}
+                    />
+                </SuperDiv>
             </SCContainer>
         </div>
     );
