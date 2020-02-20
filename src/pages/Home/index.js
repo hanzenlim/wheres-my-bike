@@ -24,7 +24,7 @@ const SCFlexCard = styled.div`
 `;
 
 const perPage = 10;
-const location = 'berlin';
+const defaultLocation = 'san francisco';
 
 function generateSearchCard(results) {
     return results.map(e => {
@@ -44,18 +44,27 @@ function generateSearchCard(results) {
 
 function Home() {
     const [searchResult, setSearchResult] = useState([]);
+    const [queryText, setQueryText] = useState('');
 
     useEffect(() => {
-        fetch(getBikeWiseSearchUrl({ location, page: 1, perPage }), {
-            method: 'GET',
-        })
+        fetch(
+            getBikeWiseSearchUrl({
+                location: defaultLocation,
+                page: 1,
+                perPage,
+                queryText,
+            }),
+            {
+                method: 'GET',
+            }
+        )
             .then(res => res.json())
             .then(response => {
                 console.log(response);
                 setSearchResult(_get(response, 'incidents'));
             })
             .catch(error => console.log(error));
-    }, []);
+    }, [queryText]);
 
     return (
         <div>
@@ -68,8 +77,8 @@ function Home() {
                     {/* <SuperDiv width="200px" margin="0 auto"> */}
                     <Search
                         size="large"
-                        placeholder="input search text"
-                        onSearch={value => alert(value)}
+                        placeholder="search for your bike"
+                        onSearch={value => setQueryText(value)}
                     />
                 </SuperDiv>
             </SuperDiv>
