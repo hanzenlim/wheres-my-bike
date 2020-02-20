@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Icon } from 'antd';
 import { DatePicker } from 'antd';
 import moment from 'moment';
 import _get from 'lodash/get';
@@ -29,6 +30,17 @@ const perPage = 10;
 const defaultLocation = 'berlin';
 
 function generateSearchCard(results) {
+    if (results.length === 0) {
+        return (
+            <SuperDiv height="100vh" margin="20px auto">
+                <SuperDiv fontSize="50px">
+                    <Icon type="frown" />
+                </SuperDiv>
+                <SuperDiv fontSize="20px">Sorry no results!</SuperDiv>
+            </SuperDiv>
+        );
+    }
+
     return results.map(e => {
         return (
             <SCFlexCard>
@@ -44,8 +56,17 @@ function generateSearchCard(results) {
     });
 }
 
+function renderLoadingComponent() {
+    return (
+        <SuperDiv margin="30px auto" height="100vh" fontSize="60px">
+            <Icon type="loading" />
+        </SuperDiv>
+    );
+}
+
 function Home() {
     const [searchResult, setSearchResult] = useState([]);
+    const [isLoading, setIsLoading] = useState([true]);
     const [queryText, setQueryText] = useState('');
     const [dateRange, setDateRange] = useState(['', '']);
 
@@ -66,6 +87,7 @@ function Home() {
             .then(response => {
                 console.log(response);
                 setSearchResult(_get(response, 'incidents'));
+                setIsLoading(false);
             })
             .catch(error => console.log(error));
     }, [queryText, dateRange]);
@@ -78,11 +100,13 @@ function Home() {
                     width={['300px', '500px', '500px']}
                     margin="0 auto"
                 >
-                    {/* <SuperDiv width="200px" margin="0 auto"> */}
                     <Search
                         size="large"
                         placeholder="search for your bike"
-                        onSearch={value => setQueryText(value)}
+                        onSearch={value => {
+                            setQueryText(value);
+                            setIsLoading(true);
+                        }}
                     />
                     <SuperDiv marginTop="5px">
                         <RangePicker
@@ -90,6 +114,7 @@ function Home() {
                             size="large"
                             onChange={(a, b) => {
                                 const [startDate, endDate] = b;
+                                setIsLoading(true);
                                 setDateRange([
                                     moment(startDate).unix(),
                                     moment(endDate).unix(),
@@ -99,7 +124,11 @@ function Home() {
                     </SuperDiv>
                 </SuperDiv>
             </SuperDiv>
-            <SCContainer>{generateSearchCard(searchResult)}</SCContainer>
+            <SCContainer>
+                {isLoading
+                    ? renderLoadingComponent()
+                    : generateSearchCard(searchResult)}
+            </SCContainer>
         </div>
     );
 }
