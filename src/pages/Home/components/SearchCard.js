@@ -18,7 +18,7 @@ const SCDefaultImage = styled.div`
 
 const SCCardContainer = styled.div``;
 
-function SearchCard({ imgSrc, title }) {
+function SearchCard({ imgSrc, title, dateOccured }) {
     let imgComponent;
     if (imgSrc) {
         imgComponent = (
@@ -32,7 +32,12 @@ function SearchCard({ imgSrc, title }) {
             hoverable
             cover={<SCCardContainer>{imgComponent}</SCCardContainer>}
         >
-            <p>{title}</p>
+            <b>Date:</b> {dateOccured}
+            <p>
+                <b>Name: </b>
+                {title}
+            </p>
+            <p></p>
         </SCCard>
     );
 }
