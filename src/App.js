@@ -10,7 +10,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 const SCContainer = styled.div`
-    height: 80vh;
+    height: 90vh
     background: #f5f5f5;
 `;
 function App() {
@@ -18,7 +18,7 @@ function App() {
         <div className="App">
             <Router>
                 <div>
-                    <Header vh="20">I'm the header</Header>
+                    <Header vh="10">I'm the header</Header>
                     <SCContainer>
                         {/* A <Switch> looks through its children <Route>s and
       renders the first one that matches the current URL. */}
