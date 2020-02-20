@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { DatePicker } from 'antd';
 import moment from 'moment';
 import _get from 'lodash/get';
 import styled from 'styled-components';
@@ -9,6 +10,7 @@ import SuperDiv from '../../components/SuperDiv';
 import { getBikeWiseSearchUrl } from '../../util/bikewiseApi';
 
 const { Search } = Input;
+const { RangePicker } = DatePicker;
 
 const SCContainer = styled.div`
     padding: 20px 50px;
@@ -24,7 +26,7 @@ const SCFlexCard = styled.div`
 `;
 
 const perPage = 10;
-const defaultLocation = 'san francisco';
+const defaultLocation = 'berlin';
 
 function generateSearchCard(results) {
     return results.map(e => {
@@ -45,6 +47,7 @@ function generateSearchCard(results) {
 function Home() {
     const [searchResult, setSearchResult] = useState([]);
     const [queryText, setQueryText] = useState('');
+    const [dateRange, setDateRange] = useState(['', '']);
 
     useEffect(() => {
         fetch(
@@ -53,6 +56,7 @@ function Home() {
                 page: 1,
                 perPage,
                 queryText,
+                dateRange,
             }),
             {
                 method: 'GET',
@@ -64,14 +68,14 @@ function Home() {
                 setSearchResult(_get(response, 'incidents'));
             })
             .catch(error => console.log(error));
-    }, [queryText]);
+    }, [queryText, dateRange]);
 
     return (
         <div>
             <SuperDiv marginTop="20px" margin="0 auto" fontSize="30px">
                 <SuperDiv
                     paddingTop="20px"
-                    width={['300px', '300px', '300px']}
+                    width={['300px', '500px', '500px']}
                     margin="0 auto"
                 >
                     {/* <SuperDiv width="200px" margin="0 auto"> */}
@@ -80,6 +84,19 @@ function Home() {
                         placeholder="search for your bike"
                         onSearch={value => setQueryText(value)}
                     />
+                    <SuperDiv marginTop="5px">
+                        <RangePicker
+                            style={{ width: '100%' }}
+                            size="large"
+                            onChange={(a, b) => {
+                                const [startDate, endDate] = b;
+                                setDateRange([
+                                    moment(startDate).unix(),
+                                    moment(endDate).unix(),
+                                ]);
+                            }}
+                        />
+                    </SuperDiv>
                 </SuperDiv>
             </SuperDiv>
             <SCContainer>{generateSearchCard(searchResult)}</SCContainer>
