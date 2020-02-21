@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pagination } from 'antd';
+import { Pagination, Modal } from 'antd';
 import { Icon } from 'antd';
 import { DatePicker } from 'antd';
 import moment from 'moment';
@@ -7,7 +7,9 @@ import _get from 'lodash/get';
 import styled from 'styled-components';
 import { Input } from 'antd';
 
+import Loading from '../../components/Loading';
 import SearchCard from './components/SearchCard';
+import BikeDetails from '../BikeDetails';
 import SuperDiv from '../../components/SuperDiv';
 import { getBikeWiseSearchUrl } from '../../util/bikewiseApi';
 
@@ -30,7 +32,7 @@ const SCFlexCard = styled.div`
 const perPage = 10;
 const defaultLocation = 'berlin';
 
-function generateSearchCard(results) {
+function generateSearchCard(results, onSearchCardClick) {
     if (results.length === 0) {
         return (
             <SuperDiv height="100vh" margin="20px auto">
@@ -46,6 +48,7 @@ function generateSearchCard(results) {
         return (
             <SCFlexCard>
                 <SearchCard
+                    onClick={() => onSearchCardClick(_get(e, 'id'))}
                     title={_get(e, 'title')}
                     imgSrc={_get(e, 'media.image_url_thumb')}
                     dateOccured={moment(_get(e, 'occurred_at')).format(
@@ -71,6 +74,8 @@ function Home() {
     const [queryText, setQueryText] = useState('');
     const [dateRange, setDateRange] = useState(['', '']);
     const [page, setPage] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [bikeDetailId, setBikeDetailId] = useState();
 
     useEffect(() => {
         fetch(
@@ -94,9 +99,25 @@ function Home() {
             .catch(error => console.log(error));
     }, [queryText, dateRange, page]);
 
+    function onSearchCardClick(id) {
+        setBikeDetailId(id);
+        setIsModalOpen(true);
+    }
+
     return (
         <div>
             <SuperDiv marginTop="20px" margin="0 auto" fontSize="30px">
+                <Modal
+                    footer={null}
+                    title="Bike Detail"
+                    visible={isModalOpen}
+                    onCancel={() => {
+                        setIsModalOpen(false);
+                        setBikeDetailId(undefined);
+                    }}
+                >
+                    <BikeDetails id={bikeDetailId} />
+                </Modal>
                 <SuperDiv
                     paddingTop="20px"
                     width={['300px', '500px', '500px']}
@@ -127,9 +148,11 @@ function Home() {
                 </SuperDiv>
             </SuperDiv>
             <SCContainer>
-                {isLoading
-                    ? renderLoadingComponent()
-                    : generateSearchCard(searchResult)}
+                {isLoading ? (
+                    <Loading />
+                ) : (
+                    generateSearchCard(searchResult, onSearchCardClick)
+                )}
                 <SuperDiv margin="0 auto">
                     <Pagination
                         defaultCurrent={1}
