@@ -153,7 +153,13 @@ function Home() {
                         {generateSearchCard(searchResult, onSearchCardClick)}
                     </SCFlexContainer>
                 )}
-                <SuperDiv margin="0 auto">
+                <SuperDiv
+                    display="flex"
+                    justifyContent="center"
+                    marginBottom="30px"
+                    marginLeft="auto"
+                    marginRight="auto"
+                >
                     <Pagination
                         defaultCurrent={1}
                         total={50}

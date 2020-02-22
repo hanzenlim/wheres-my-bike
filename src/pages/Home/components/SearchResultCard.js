@@ -11,6 +11,8 @@ const SCCard = styled(Card)`
 
 const SCDefaultImage = styled.div`
     height: 200px;
+    display: flex;
+    justify-content: center;
     border-bottom: 0.5px solid #dcd6d6;
     margin-top: 20px;
     font-size: 100px;

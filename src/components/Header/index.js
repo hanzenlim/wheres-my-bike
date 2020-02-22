@@ -9,6 +9,7 @@ const SCHeader = styled.div`
 
 const SCText = styled.div`
     font-size: 3rem;
+    margin-left: 30px;
 `;
 
 function Header({ vh }) {
@@ -16,7 +17,7 @@ function Header({ vh }) {
         <SCHeader vh={vh}>
             <SCText>
                 <span role="img" aria-label="Looking for your bike">
-                    🚲 🚲 🚲
+                    🚲
                 </span>
             </SCText>
             {/* <nav>
