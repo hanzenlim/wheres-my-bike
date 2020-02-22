@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { Input } from 'antd';
 
 import Loading from '../../components/Loading';
-import SearchCard from './components/SearchCard';
+import SearchCard from './components/SearchResultCard';
 import BikeDetails from '../BikeDetails';
 import SuperDiv from '../../components/SuperDiv';
 import { getBikeWiseSearchUrl } from '../../util/bikewiseApi';
@@ -16,7 +16,7 @@ import { getBikeWiseSearchUrl } from '../../util/bikewiseApi';
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 
-const SCContainer = styled.div`
+const SCFlexContainer = styled.div`
     padding: 20px 50px;
     display: flex;
     flex-wrap: wrap;
@@ -58,14 +58,6 @@ function generateSearchCard(results, onSearchCardClick) {
             </SCFlexCard>
         );
     });
-}
-
-function renderLoadingComponent() {
-    return (
-        <SuperDiv margin="30px auto" height="100vh" fontSize="60px">
-            <Icon type="loading" />
-        </SuperDiv>
-    );
 }
 
 function Home() {
@@ -124,6 +116,7 @@ function Home() {
                     margin="0 auto"
                 >
                     <Search
+                        width="100%"
                         size="large"
                         placeholder="search for your bike"
                         onSearch={value => {
@@ -136,22 +129,29 @@ function Home() {
                             style={{ width: '100%' }}
                             size="large"
                             onChange={(a, b) => {
+                                debugger;
                                 const [startDate, endDate] = b;
                                 setIsLoading(true);
                                 setDateRange([
-                                    moment(startDate).unix(),
-                                    moment(endDate).unix(),
+                                    startDate
+                                        ? moment(startDate).unix()
+                                        : undefined,
+                                    endDate
+                                        ? moment(endDate).unix()
+                                        : undefined,
                                 ]);
                             }}
                         />
                     </SuperDiv>
                 </SuperDiv>
             </SuperDiv>
-            <SCContainer>
+            <SuperDiv>
                 {isLoading ? (
                     <Loading />
                 ) : (
-                    generateSearchCard(searchResult, onSearchCardClick)
+                    <SCFlexContainer>
+                        {generateSearchCard(searchResult, onSearchCardClick)}
+                    </SCFlexContainer>
                 )}
                 <SuperDiv margin="0 auto">
                     <Pagination
@@ -168,7 +168,7 @@ function Home() {
                         }}
                     />
                 </SuperDiv>
-            </SCContainer>
+            </SuperDiv>
         </div>
     );
 }

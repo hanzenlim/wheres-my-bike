@@ -11,6 +11,18 @@ const SCCard = styled(Card)`
     overflow: hidden;
 `;
 
+const SCDefaultImage = styled.div`
+    height: 200px;
+    font-size: 100px;
+    border: 0.5px solid #dcd6d6;
+    /* margin-top: 20px; */
+    font-size: 160px;
+    display: flex;
+    justify-content: center;
+    height: 350px;
+    padding-top: 34px;
+`;
+
 function BikeDetail({ id }) {
     useEffect(() => {
         if (!id) {
@@ -44,13 +56,23 @@ function BikeDetail({ id }) {
     if (isLoading) {
         return <Loading />;
     }
+
+    let imgComponent;
+    if (imgSrc) {
+        imgComponent = <img alt="thumbnail" src={imgSrc} width="100%" />;
+    } else {
+        imgComponent = (
+            <SCDefaultImage>
+                <span aria-label="bike" role="img">
+                    🚲
+                </span>
+            </SCDefaultImage>
+        );
+    }
+
     return (
         <SuperDiv>
-            {imgSrc && (
-                <SCCard>
-                    <img alt="bike" src={imgSrc} />
-                </SCCard>
-            )}
+            {imgComponent}
 
             <SuperDiv marginTop="10px">
                 {title && (

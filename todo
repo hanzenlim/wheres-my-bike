@@ -6,7 +6,7 @@
     - [+] Case title
     - [+] Case description
     - [+] Date of the theft
-    - [+] Date of when the case was reported
+    - [ ] Date of when the case was reported
     - [+] Location of the theft
     - [+] Picture of the bike, if available
     - [+] I want to filter reported bike thefts by partial case title.
@@ -16,6 +16,7 @@
     - [+] I want to see an empty state if there are no results.
 - [ ] Home Page
     - [+] header
+    - [ ] footer
     - [+] general layout 
     - [+] search bar
     - [+] search card
@@ -23,20 +24,12 @@
     - [+] connect to api
         - [+] connect to incidents API https://bikewise.org:443/api/v2/incidents?page=1&proximity_square=100
     - [+] pagination
-- [ ] Bike detail page 
-    - [ ] open a modal when clicking 
-
-- [ 
+- [+] Bike detail page 
+    - [+] open a modal when clicking 
 - [ ] About Page
-- [ ] 
-- [ ] 
-- [ ] 
 - [ ] Optional(Performance/Misc)
     - [ ] Add lazy loading for images 
     - [ ] Add offline mode
-- [ ] 
-- [ ] 
-- [ ] 
 - [ ] frameworks/local dev setup
     - [+] Add react router
     - [+] Add styled components
