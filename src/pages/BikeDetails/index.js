@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import _get from 'lodash/get';
 import styled from 'styled-components';
-import { Card } from 'antd';
 
 import SuperDiv from '../../components/SuperDiv';
 import Loading from '../../components/Loading';
 import { getBikeWiseBikeDetailUrl } from '../../util/bikewiseApi';
-
-const SCCard = styled(Card)`
-    overflow: hidden;
-`;
 
 const SCDefaultImage = styled.div`
     height: 200px;

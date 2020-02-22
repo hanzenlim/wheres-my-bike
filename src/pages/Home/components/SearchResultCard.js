@@ -27,7 +27,13 @@ function SearchCard({ onClick, imgSrc, title, dateOccured }) {
             <img alt="thumbnail" src={imgSrc} width="240" height="220" />
         );
     } else {
-        imgComponent = <SCDefaultImage>🚲</SCDefaultImage>;
+        imgComponent = (
+            <SCDefaultImage>
+                <span role="img" aria-label="bike">
+                    🚲
+                </span>
+            </SCDefaultImage>
+        );
     }
     return (
         <SCCard
